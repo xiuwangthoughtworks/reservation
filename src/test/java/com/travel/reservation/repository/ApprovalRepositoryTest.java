@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.travel.reservation.domain.ApprovalStatus;
 import com.travel.reservation.domain.entity.Approval;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,18 +14,15 @@ class ApprovalRepositoryTest {
   @Autowired
   ApprovalRepository approvalRepository;
 
-  @AfterEach
-  public void cleanUp() {
-    approvalRepository.deleteAll();
-  }
-
   @Test
   void should_return_approval_entity_when_save_approval_entity_given_save_success() {
-    Approval approval = approvalRepository.save(buildApprovalEntity());
-    approvalRepository.save(buildApprovalEntity());
+    Approval approval = buildApprovalEntity();
+    Approval actualApproval = approvalRepository.save(approval);
 
-    Approval expectedApproval = buildApprovalEntity();
-    assertEquals(expectedApproval, approval);
+    assertEquals(approval.getReservationId(), actualApproval.getReservationId());
+    assertEquals(approval.getStatus(), actualApproval.getStatus());
+
+    approvalRepository.deleteAll();
   }
 
   @Test

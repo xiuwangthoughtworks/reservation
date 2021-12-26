@@ -36,7 +36,7 @@ class ReservationControllerTest {
     Approval approval = buildRejectApproval();
     when(approvalService.reject(RESERVATION_ID)).thenReturn(approval);
 
-    MvcResult mvcResult = mockMvc.perform(post("/travel-reservations/1/rejection"))
+    MvcResult mvcResult = mockMvc.perform(post("/travel-reservations/1/rejections"))
         .andExpect(status().isCreated())
         .andReturn();
 
@@ -48,7 +48,7 @@ class ReservationControllerTest {
   void should_return_500_status_when_reject_reservation_given_service_throw_reservation_not_found_exception() throws Exception {
     when(approvalService.reject(RESERVATION_ID)).thenThrow(DataBaseException.class);
 
-    mockMvc.perform(post("/travel-reservations/1/rejection"))
+    mockMvc.perform(post("/travel-reservations/1/rejections"))
         .andExpect(status().isInternalServerError())
         .andExpect(result -> assertTrue(result.getResolvedException() instanceof DataBaseException));
   }

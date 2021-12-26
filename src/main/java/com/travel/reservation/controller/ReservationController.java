@@ -17,7 +17,7 @@ public class ReservationController {
   private final ApprovalService approvalService;
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/{rid}/rejection")
+  @PostMapping("/{rid}/rejections")
   public Approval rejectReservation(@PathVariable String rid) {
     return approvalService.reject(rid);
   }
